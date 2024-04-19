@@ -49,7 +49,7 @@ def GPS(url_api, path_json, path_csv, mapa, linea_colectivo, id_colectivo):
                 file_csv = renombrar_dataframe(file_csv)
                 coordenadas_colectivo(1, path_json, file_csv, id_elegidoV2, ubicaciones_historicas, mapa)
         else:
-            file_csv = pd.read_csv(path_csv)
+            file_csv = pd.read_json(path_json) # Esto no se usa pero lo dejo para el polimorfismo <3
             coordenadas_colectivo(0, path_json, file_csv, id_colectivo, ubicaciones_historicas, mapa)
     except Exception as e:
         print("Error al obtener datos:", e)
@@ -59,8 +59,8 @@ def GPS(url_api, path_json, path_csv, mapa, linea_colectivo, id_colectivo):
 # ========================================================================= #
 
 # Tokens para acceder a la API
-client_id = "TOKEN_PARA_API"
-client_secret = "TOKEN_PARA_API"
+client_id = "TOKEN_API"
+client_secret = "TOKEN_API"
 
 # Requests para la API
 gps_linea_145 = f"https://apitransporte.buenosaires.gob.ar/colectivos/vehiclePositions?client_id={client_id}&client_secret={client_secret}&json=1&agency_id=516"
@@ -69,14 +69,15 @@ gps_todas_las_lineas = f"https://apitransporte.buenosaires.gob.ar/colectivos/veh
 
 
 # Definir la línea de colectivo a trackear (con su ramal, es decir su letra)
-linea_colectivo = "109A"
+linea_colectivo = "160A"
 
 
 
 # Paths donde guardar archivos json y csv
 current_dir = os.path.dirname(os.path.realpath(__file__))
-path_json = os.path.join(current_dir, "..", "data", f"{linea_colectivo}.json")
-path_csv = os.path.join(current_dir, "..", "data", f"{linea_colectivo}.csv")
+parent_dir = os.path.dirname(current_dir)
+path_json = os.path.join(parent_dir, "data", f"{linea_colectivo}.json")
+path_csv = os.path.join(parent_dir, "data", f"{linea_colectivo}.csv")
 
 
  ## Ejemplos de algunos id (sacados de https://transitfeeds.com/p/colectivos-buenos-aires/1037/latest/routes?q=109)
@@ -99,7 +100,7 @@ def main():
         id_colectivo = 0
     else:
         url_api = gps_todas_las_lineas
-        id_colectivo = linea_109A_estLiniers
+        id_colectivo = linea_160A_estLanus
         # Acá tenes que poner el id del colectivo que queres trackear, se puede buscar en transitfeeds.com o con la API BA
 
         
