@@ -6,7 +6,7 @@ Este programa usa la [API Transporte de BA](https://buenosaires.gob.ar/infraestr
 
 
 ### Recorrido obtenido con el script:
-
+ 
 <img src="images/console_output.jpg" width="75%">
 
 

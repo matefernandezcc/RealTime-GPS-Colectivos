@@ -33,7 +33,7 @@ Búsqueda de información de eventos por mes en vía pública de la Ciudad Autó
 Dentro del ítem “tránsito”, acceder al título “eventos”.
 
 
-* **[Consultar cortes de tránsito - Python](https://github.com/datosgcba/taller-api-transporte/blob/master/cortes.ipynb)**
+* **[Consultar cortes de tránsito - Python](https://github.com/datosgcba/taller-api-transporte/blob/master/cortes.ipynb)** 
 
 Datos sobre cortes en la vía pública de la Ciudad Autónoma de Buenos Aires, por día. Realizado en Python 3.6.
 Dentro del ítem “tránsito”, acceder al título “cortes”.
