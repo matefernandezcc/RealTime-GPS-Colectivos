@@ -66,12 +66,18 @@ client_secret = "TOKEN_PARA_API"
 gps_linea_145 = f"https://apitransporte.buenosaires.gob.ar/colectivos/vehiclePositions?client_id={client_id}&client_secret={client_secret}&json=1&agency_id=516"
 gps_todas_las_lineas = f"https://apitransporte.buenosaires.gob.ar/colectivos/vehiclePositionsSimple?client_id={client_id}&client_secret={client_secret}"
 
-# Paths donde guardar archivos json y csv
-path_json = "C:\\Users\\Mateo\\Desktop\\test\\tracker-colectivos\\src\\data\\linea_145.json"
-path_csv = "C:\\Users\\Mateo\\Desktop\\test\\tracker-colectivos\\src\\data\\linea_145.csv"
+
 
 # Definir la línea de colectivo a trackear (con su ramal, es decir su letra)
 linea_colectivo = "109A"
+
+
+
+# Paths donde guardar archivos json y csv
+current_dir = os.path.dirname(os.path.realpath(__file__))
+path_json = os.path.join(current_dir, "..", "data", f"{linea_colectivo}.json")
+path_csv = os.path.join(current_dir, "..", "data", f"{linea_colectivo}.csv")
+
 
  ## Ejemplos de algunos id (sacados de https://transitfeeds.com/p/colectivos-buenos-aires/1037/latest/routes?q=109)
 linea_109A_estLiniers = 15718
@@ -86,9 +92,8 @@ mapa = folium.Map(location=[-34.6037, -58.3816], zoom_start=12)
 
 def main():
     print("Accediendo a la API...\n")
-    # La parada que voy a usar es:
-    #  stop_id,stop_code,stop_name,stop_lat,stop_lon
-    # "201736","201736","20 DRAGO LUIS MARIA",-34.603442,-58.435302
+
+    
     if (linea_colectivo == "145C"):
         url_api = gps_linea_145
         id_colectivo = 0
@@ -96,6 +101,8 @@ def main():
         url_api = gps_todas_las_lineas
         id_colectivo = linea_109A_estLiniers
         # Acá tenes que poner el id del colectivo que queres trackear, se puede buscar en transitfeeds.com o con la API BA
+
+        
     print(f"\t========== Localización GPS del {linea_colectivo} id: {id_colectivo} ==========")
     try:
         while True:
