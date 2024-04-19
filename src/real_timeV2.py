@@ -59,8 +59,8 @@ def GPS(url_api, path_json, path_csv, mapa, linea_colectivo, id_colectivo):
 # ========================================================================= #
 
 # Tokens para acceder a la API
-client_id = "TOKEN_PARA_API"
-client_secret = "TOKEN_PARA_API"
+client_id = "TOKEN_API"
+client_secret = "TOKEN_API"
 
 # Requests para la API
 gps_linea_145 = f"https://apitransporte.buenosaires.gob.ar/colectivos/vehiclePositions?client_id={client_id}&client_secret={client_secret}&json=1&agency_id=516"
@@ -75,8 +75,9 @@ linea_colectivo = "145C"
 
 # Paths donde guardar archivos json y csv
 current_dir = os.path.dirname(os.path.realpath(__file__))
-path_json = os.path.join(current_dir, "..", "data", f"{linea_colectivo}.json")
-path_csv = os.path.join(current_dir, "..", "data", f"{linea_colectivo}.csv")
+parent_dir = os.path.dirname(current_dir)
+path_json = os.path.join(parent_dir, "data", f"{linea_colectivo}.json")
+path_csv = os.path.join(parent_dir, "data", f"{linea_colectivo}.csv")
 
 
  ## Ejemplos de algunos id (sacados de https://transitfeeds.com/p/colectivos-buenos-aires/1037/latest/routes?q=109)
