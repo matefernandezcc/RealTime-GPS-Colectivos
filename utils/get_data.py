@@ -4,6 +4,9 @@ import zipfile
 import os
 import folium
 import sys
+import math
+#import networkx as nx
+#from shapely.geometry import Point
 
 ## Defino arrays con todas las paradas del 145C ordenadas por su stop_id
 stop_hacia_utn = [2032595,2032591,205731,205979,20887,2032582,201900,202112,203146,201898,205194,20904,201912,207358,20998,20983]
@@ -125,16 +128,61 @@ def coordenadas_colectivo(tipo, path_json, csv, id_colectivo, ubicaciones_histor
     if len(ubicaciones_historicas) > 1:
         folium.PolyLine(ubicaciones_historicas, color="blue", weight=2.5, opacity=1).add_to(mapa)
 
+def direccion_coordenada(latitud, longitud):
+    url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitud}&lon={longitud}&zoom=18&addressdetails=1"
+    response = requests.get(url)
+    data = response.json()
+
+    try:
+        house_number = data['address'].get('house_number', '')
+        road = data['address'].get('road', '')
+        return f"{road} {house_number}"
+    except KeyError:
+        print("Alguno de los datos de dirección no está presente en la respuesta.")
+        return None, None, None
+
 def detalles_coordenadas(latitud, longitud):
     url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitud}&lon={longitud}&zoom=18&addressdetails=1"
     response = requests.get(url)
     data = response.json()
-    
+
+    # Casa
+    #lat = -34.602615
+    #lon = -58.425800
+
+    # Parada 145C
+    lat = -34.603278
+    lon = -58.435494
+    nombre_parada = direccion_coordenada(lat, lon)
+
     try:
         house_number = data['address'].get('house_number', '')
         road = data['address'].get('road', '')
         suburb = data['address'].get('suburb', '')
-        print(f"Coordenadas actuales: {latitud}, {longitud} | {road} {house_number}, {suburb}")
+        distancia = distancia_colectivo_parada(latitud, longitud, lat, lon)
+        print(f"{latitud}, {longitud} | {road} {house_number}, {suburb} | A {distancia} Kms de {nombre_parada}")
     except KeyError:
         print("Alguno de los datos de dirección no está presente en la respuesta.")
         return None, None, None
+
+def distancia_colectivo_parada(latitud_colectivo, longitud_colectivo, latitud_parada, longitud_parada):
+    # Convertir las coordenadas de grados a radianes
+    latitud_colectivo = math.radians(latitud_colectivo)
+    longitud_colectivo = math.radians(longitud_colectivo)
+    latitud_parada = math.radians(latitud_parada)
+    longitud_parada = math.radians(longitud_parada)
+    
+    # Calcular la diferencia de latitud y longitud
+    delta_latitud = latitud_parada - latitud_colectivo
+    delta_longitud = longitud_parada - longitud_colectivo
+    
+    # Aplicar la fórmula de la distancia euclidiana en un plano cartesiano
+    distancia = math.sqrt(delta_latitud ** 2 + delta_longitud ** 2) * 6371  # Radio de la Tierra en kilómetros
+    
+    # Truncar la distancia a dos decimales
+    distancia_truncada = round(distancia, 2)
+    
+    return distancia_truncada
+
+
+

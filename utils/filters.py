@@ -1,5 +1,5 @@
-import pandas as pd
 import sys
+from utils.get_data import *
 
 def by_linea_colectivo(file, linea):
     file_by_linea = file[file.route_short_name.str.contains(linea, case=False)]
@@ -35,6 +35,11 @@ def radio_de_llegada(array_de_id, csv145):
         
         # Incrementar el índice para pasar al próximo stop_id en la siguiente iteración
         i += 1
+    fila_aleatoria = filtro.sample()
+
+    latitud = fila_aleatoria['latitude'].values[0]
+    longitud = fila_aleatoria['longitude'].values[0]
+    nombre_parada = direccion_coordenada(latitud, longitud)
     
-    print(f"Se encontraron colectivos de la línea 145 en la parada con stop_id {stop_id_actual}.\n")
+    print(f"Se encontraron colectivos línea 145 en la parada {nombre_parada}\n")
     return stop_id_actual

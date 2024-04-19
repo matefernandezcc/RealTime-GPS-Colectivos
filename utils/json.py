@@ -28,7 +28,7 @@ def json2csv(json_file_path, csv_file_path):
         df = pd.json_normalize(json_data)
 
         # Seleccionar las columnas relevantes
-        selected_columns = ['_id', '_vehicle._position._latitude', '_vehicle._position._longitude', 
+        selected_columns = ['_id', '_vehicle._vehicle._id', '_vehicle._position._latitude', '_vehicle._position._longitude', 
                             '_vehicle._position._speed', '_vehicle._stop_id', '_vehicle._timestamp', 
                             '_vehicle._trip._route_id', '_vehicle._trip._trip_id']
         df_selected = df[selected_columns]
@@ -93,7 +93,8 @@ def renombrar_dataframe(df):
         DataFrame: DataFrame con las columnas renombradas.
     """
     nuevos_nombres = {
-        '_id': 'id',
+        '_id': 'id_empresa',
+        '_vehicle._vehicle._id':'id_colectivo',
         '_vehicle._position._latitude': 'latitude',
         '_vehicle._position._longitude': 'longitude',
         '_vehicle._position._speed': 'velocidad',
