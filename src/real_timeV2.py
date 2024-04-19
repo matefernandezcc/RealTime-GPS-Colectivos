@@ -49,7 +49,7 @@ def GPS(url_api, path_json, path_csv, mapa, linea_colectivo, id_colectivo):
                 file_csv = renombrar_dataframe(file_csv)
                 procesar_colectivo(1, path_json, file_csv, id_elegidoV2, ubicaciones_historicas, mapa)
         else:
-            file_csv = pd.read_csv(path_csv) # No se usa esto pero lo dejo para tener polimorfismo <3
+            file_csv = pd.read_json(path_json) # No se usa esto pero lo dejo para tener polimorfismo <3
             procesar_colectivo(0, path_json, file_csv, id_colectivo, ubicaciones_historicas, mapa)
     except Exception as e:
         print("Error al obtener datos:", e)

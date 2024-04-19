@@ -131,9 +131,10 @@ def detalles_coordenadas(latitud, longitud):
     data = response.json()
     
     try:
-        house_number = data['address']['house_number']
-        road = data['address']['road']
-        suburb = data['address']['suburb']
+        house_number = data['address'].get('house_number', '')
+        road = data['address'].get('road', '')
+        suburb = data['address'].get('suburb', '')
         print(f"Coordenadas actuales: {latitud}, {longitud} | {road} {house_number}, {suburb}")
     except KeyError:
+        print("Alguno de los datos de dirección no está presente en la respuesta.")
         return None, None, None

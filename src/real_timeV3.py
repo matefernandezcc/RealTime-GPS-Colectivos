@@ -69,15 +69,15 @@ gps_todas_las_lineas = f"https://apitransporte.buenosaires.gob.ar/colectivos/veh
 
 
 # Definir la línea de colectivo a trackear (con su ramal, es decir su letra)
-linea_colectivo = "160A"
+linea_colectivo = "145C"
 
 
 
 # Paths donde guardar archivos json y csv
 current_dir = os.path.dirname(os.path.realpath(__file__))
 parent_dir = os.path.dirname(current_dir)
-path_json = os.path.join(parent_dir, "data", f"{linea_colectivo}.json")
-path_csv = os.path.join(parent_dir, "data", f"{linea_colectivo}.csv")
+path_json = os.path.join(parent_dir, "data", "colectivo_info.json")
+path_csv = os.path.join(parent_dir, "data", "colectivo_info.csv")
 
 
  ## Ejemplos de algunos id (sacados de https://transitfeeds.com/p/colectivos-buenos-aires/1037/latest/routes?q=109)
@@ -100,7 +100,7 @@ def main():
         id_colectivo = 0
     else:
         url_api = gps_todas_las_lineas
-        id_colectivo = linea_160A_estLanus
+        id_colectivo = linea_99A
         # Acá tenes que poner el id del colectivo que queres trackear, se puede buscar en transitfeeds.com o con la API BA
 
         
